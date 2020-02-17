@@ -1,0 +1,100 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.harsh.dkatalislabs"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "URL_BASE", '"https://randomuser.me/api/"')
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                'proguard-rules.pro'
+            setProperty("archivesBaseName", "dkatalis-app-v$defaultConfig.versionName")
+        }
+    }
+    compileOptions {
+        sourceCompatibility rootProject.ext.java_version
+        targetCompatibility rootProject.ext.java_version
+    }
+
+    kotlinOptions {
+        jvmTarget = rootProject.ext.java_version
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+configurations {
+    ktlint
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.dagger:dagger:$DAGGER_VERSION"
+    implementation "com.google.dagger:dagger-android:$DAGGER_VERSION"
+    implementation "com.google.dagger:dagger-android-support:$DAGGER_VERSION"
+
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.3.1"
+
+    implementation "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION"
+    implementation "io.reactivex.rxjava2:rxandroid:$RXANDROID_VERSION"
+    implementation 'androidx.room:room-runtime:2.2.3'
+    implementation 'androidx.room:room-rxjava2:2.2.3'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
+
+    api 'com.github.ittianyu:BottomNavigationViewEx:2.0.2'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    // App compat and UI things
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$GLIDE_VERSION"
+
+    kapt "com.github.bumptech.glide:compiler:$GLIDE_VERSION"
+    kapt 'androidx.room:room-compiler:2.2.3'
+    kapt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    kapt "com.google.dagger:dagger-android-processor:$DAGGER_VERSION"
+
+    ktlint "com.github.shyiko:ktlint:0.27.0"
+
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$MOCKITO_KOTLIN_VERSION"
+    testImplementation "junit:junit:$JUNIT_VERSION"
+
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    androidTestImplementation(
+        'androidx.test.espresso:espresso-contrib:3.1.0') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
+
+    androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+}

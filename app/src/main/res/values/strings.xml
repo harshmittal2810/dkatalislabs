@@ -1,0 +1,9 @@
+<resources>
+	<string name="app_name">DKatalis Labs</string>
+	<string name="user">User</string>
+	<string name="calendar">Calendar</string>
+	<string name="location">Location</string>
+	<string name="call">Call</string>
+	<string name="lock">Lock</string>
+	<string name="favourite">Favourite</string>
+</resources>
